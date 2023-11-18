@@ -1,0 +1,4 @@
+如果觉得传感器噪声较大可以尝试使用如下配置
+
+ICM20602_CONFIG寄存器设置为0x03  //41HZ 1KHZ
+ICM20602_ACCEL_CONFIG_2寄存器设置为0x26  //Average 8 samples   5.1HZ

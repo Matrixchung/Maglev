@@ -1,0 +1,6 @@
+MCU开源库的开源链接  https://gitee.com/seekfree
+RT1064的ICM六轴模块采集显示：https://mp.weixin.qq.com/s/WkaP-6gWBurBRqKH4QdL7A
+
+RT1064智能车应用之六轴&超声波：https://mp.weixin.qq.com/s/Gu8ErA2reKVQG1RTgjZyKQ
+
+需要注意 里面的资料是我们收集得知 其实际可行性仅供参考

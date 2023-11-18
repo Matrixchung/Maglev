@@ -1,0 +1,21 @@
+/*
+本文档用于说明该同名文件的功能和使用方法
+
+* @file    Mags/Device/AdcDevice.txt
+* @author  GaoQi
+* @version V 0.1
+* @date    04-July-2016
+* @brief   AdcDevice.c introduce file
+
+AdcDecice文件使用了标准函数库的 stm32f10x_dma.h 文件和 stm32f10x_adc.h 文件中的相关函数
+通过使用ADC的16个常规转换通道 与DMA配合的方式 完成4个adc的转换 其中adc0 和adc1 分得到了
+较多的通道支持 adc2 和adc3 仅有较少的通道支持 文件将功能封装为3个函数方便调用 分别为
+
+void ADC_Config(void);  这个函数用于初始化adc 当初始化完成时 adc进入待命状态
+
+void ADC_GetData(void); 这个函数用于整理adc的转换数据
+
+void ADC_StartRun(void);这个函数用于在adc完成初始化后启动adc 完成转换工作
+*/
+
+

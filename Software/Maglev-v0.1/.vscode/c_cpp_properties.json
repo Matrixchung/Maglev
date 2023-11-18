@@ -1,0 +1,52 @@
+{
+  "configurations": [
+    {
+      "name": "STM32",
+      "includePath": [
+        "Core/Inc",
+        "Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "Drivers/CMSIS/Include",
+        "Drivers/STM32F4xx_HAL_Driver/Inc",
+        "User/ADC",
+        "User/Algorithm",
+        "User/BLE",
+        "User/CMSIS-DSP",
+        "User/Coil",
+        "User/Control",
+        "User/Delay",
+        "User/Encoder",
+        "User/I2C",
+        "User/IMU",
+        "User/Key",
+        "User/OLED",
+        "User/SPI",
+        "User/TOF",
+        "User/UART",
+        "User/UI",
+        "User/VOFA"
+      ],
+      "defines": [
+        "ARM_MATH_CM4",
+        "ARM_MATH_MATRIX_CHECK",
+        "ARM_MATH_ROUNDING",
+        "DATA_CACHE_ENABLE=1",
+        "EXTERNAL_CLOCK_VALUE=12288000",
+        "HSE_STARTUP_TIMEOUT=100",
+        "HSE_VALUE=8000000",
+        "HSI_VALUE=16000000",
+        "INSTRUCTION_CACHE_ENABLE=1",
+        "LSE_STARTUP_TIMEOUT=5000",
+        "LSE_VALUE=32768",
+        "LSI_VALUE=32000",
+        "PREFETCH_ENABLE=1",
+        "STM32F407xx",
+        "USE_FULL_LL_DRIVER",
+        "VDD_VALUE=3300",
+        "__TARGET_FPU_VFP",
+        "__VFP_FP__"
+      ],
+      "compilerPath": "C:\\ARM-GNU-TOOLCHAIN-12.3.REL1-MINGW-W64-I686-ARM-NONE-EABI\\BIN\\ARM-NONE-EABI-GCC.EXE"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,814 @@
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE RGB
+OBJECT MODULE PLACED IN RGB.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE RGB.C OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>  
+   3                 void RGBA(unsigned int ta); 
+   4                void RGBB(  unsigned int tb);
+   5                void RGBC (unsigned int tc);    
+   6                 void rgbd(unsigned int td);    
+   7                 void RGBE(unsigned int te);   
+   8                 void rgbf(unsigned int tf);  
+   9                 void rgbg(unsigned int tg);   
+  10                void rgbh(unsigned int th);              
+  11                void rgbl(unsigned int tl);  
+  12            #define uchar unsigned char
+  13             sfr PLC=0X97;
+  14             sbit Send_Dat=P3^3;
+  15             unsigned char RGB_BUF[24];
+  16               void delay();
+  17                 uchar  n;
+  18                uchar r;
+  19                  unsigned char *p;
+  20                   void Delay500us()  ;
+  21              
+  22               uchar a []={ 0xff,0x00,0x00} ;  
+  23               uchar b []={ 0x00,0xff,0x00} ;  
+  24               uchar c []={ 0x00,0x00,0xff} ; 
+  25               uchar d []={ 0xff,0xff,0x00} ;  
+  26               uchar e []={ 0xff,0x00,0xff} ;  
+  27               uchar f []={ 0x00,0xff,0xff} ;  
+  28               uchar g []={ 0xff,0xff,0xff} ;  
+  29               uchar h []={ 0x00,0x00,0x00} ;
+  30                              
+  31                 uchar shuzud [8] [3]={  
+  32              { 0xff,0x00,0x00},    
+  33              { 0x00,0xff,0x00} ,    
+  34              { 0x00,0x00,0xff} ,    
+  35              { 0xff,0xff,0x00} ,    
+  36              { 0xff,0x00,0xff} ,   
+  37              { 0x00,0xff,0xff} ,    
+  38              { 0xff,0xff,0xff} ,    
+  39              { 0x00,0x00,0x00} ,
+  40                                      };
+  41          
+  42                 void Delay1us()  ;
+  43                 sfr P3M1 = 0xb1;
+  44                 sfr P3M0 = 0xb2;
+  45               
+  46          struct shuzu 
+  47                 {
+  48                  uchar a [3];
+  49                  uchar b[3] ;      
+  50                 }; 
+  51                 
+  52                struct  shuzu;
+  53          void delays(uchar t);
+  54          
+  55              void Send_A_bit(uchar v)
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 2   
+
+  56          {   
+  57   1             if (v==1)
+  58   1             {   
+  59   2                    Send_Dat=1;
+  60   2                    Delay1us(); 
+  61   2                    Send_Dat=0;                    
+  62   2             }
+  63   1             else
+  64   1             {
+  65   2                    Send_Dat=1;            
+  66   2                    Send_Dat=0;           
+  67   2                Delay1us();       
+  68   2             }                
+  69   1      }
+  70          
+  71          
+  72               void Send_192bits( uchar *p1,uchar z)                      
+  73          {
+  74   1             unsigned int i=0;  uchar s; uchar x; unsigned char k;          
+  75   1                 s=8;
+  76   1                   x=0;   
+  77   1                                   
+  78   1           for   (i=x;i<s;i++)
+  79   1             {
+  80   2                    RGB_BUF[i]=p1[0]>>(i-x)&0x01;       
+  81   2             }
+  82   1                   s=s+8;
+  83   1                   x=x+8;
+  84   1             
+  85   1                    for   (i=x;i<s;i++)
+  86   1             {
+  87   2                    RGB_BUF[i]=p1[1]>>(i-x)&0x01;      
+  88   2             }           
+  89   1                   s=s+8;
+  90   1                   x=x+8;
+  91   1             
+  92   1                   for   (i=x;i<s;i++)
+  93   1             {
+  94   2                    RGB_BUF[i]=p1[2]>>(i-x)&0x01;      
+  95   2             }            
+  96   1                   s=s+8;
+  97   1                   x=x+8; 
+  98   1                       
+  99   1                for (k=0;k<z;k++)   
+ 100   1                {                                                       
+ 101   2             for (i=0;i<24;i++)
+ 102   2            {
+ 103   3                    Send_A_bit(RGB_BUF[i]);
+ 104   3             }                               
+ 105   2               }                                
+ 106   1      }
+ 107          
+ 108          
+ 109              void main()
+ 110              {
+ 111   1               P3M0 = 0x00;
+ 112   1               P3M1 = 0x00;
+ 113   1            while(1)
+ 114   1               {
+ 115   2      
+ 116   2                RGBC(10); 
+ 117   2                delays(10 );
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 3   
+
+ 118   2                 
+ 119   2                RGBA();
+*** WARNING C209 IN LINE 119 OF RGB.C: '_RGBA': too few actual parameters
+ 120   2                delays(10 );
+ 121   2                 
+ 122   2                RGBB(); 
+*** WARNING C209 IN LINE 122 OF RGB.C: '_RGBB': too few actual parameters
+ 123   2                delays(10 );          
+ 124   2                 
+ 125   2        
+ 126   2      
+ 127   2                RGBE();  
+*** WARNING C209 IN LINE 127 OF RGB.C: '_RGBE': too few actual parameters
+ 128   2                  delays(10 );
+ 129   2                  
+ 130   2      
+ 131   2                 
+ 132   2                rgbg(5);    
+ 133   2                  delays(10 );
+ 134   2      
+ 135   2                  rgbh(10);
+ 136   2                  delays(10 );
+ 137   2                
+ 138   2                  
+ 139   2                  
+ 140   2                  
+ 141   2                    rgbl(10);
+ 142   2                  delays(100 );  
+ 143   2      
+ 144   2               
+ 145   2         }
+ 146   1      }
+ 147              
+ 148          
+ 149          /////////////////////////////////////////////////////////////////////////////////////3
+ 150                void RGBC(unsigned int tc)     
+ 151              {
+ 152   1      
+ 153   1                 Send_192bits(shuzud[0],18);
+ 154   1                 delays(tc);
+ 155   1                 Send_192bits(shuzud[1],18);
+ 156   1                 delays(tc);
+ 157   1                 Send_192bits(shuzud[2],18);
+ 158   1                 delays(tc);
+ 159   1                 Send_192bits(shuzud[3],18);
+ 160   1                 delays(tc);
+ 161   1                 Send_192bits(shuzud[4],18);
+ 162   1                 delays(tc);
+ 163   1                 Send_192bits(shuzud[5],18);
+ 164   1                 delays(tc);
+ 165   1                 Send_192bits(shuzud[7],18);
+ 166   1                 delays(tc);
+ 167   1          }
+ 168          
+ 169          
+ 170          
+ 171          /////////////////////////////////////////////////////////////////////////////////////1
+ 172              void RGBA(unsigned int ta)       
+ 173              {          
+ 174   1                 Send_192bits(shuzud[7],19);
+ 175   1                 delays(10);  
+ 176   1            
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 4   
+
+ 177   1                  for (n=0;n<19;n++)
+ 178   1                    {        
+ 179   2                     Send_192bits(shuzud[0],n);
+ 180   2                 delays(2);          
+ 181   2                    }
+ 182   1                 delays(10);  
+ 183   1                    
+ 184   1                  for (n=0;n<19;n++) 
+ 185   1                    {        
+ 186   2                     Send_192bits(shuzud[1],n);
+ 187   2                 delays(2);       
+ 188   2                 }
+ 189   1                 delays(10);  
+ 190   1                 
+ 191   1                  for (n=0;n<19;n++) 
+ 192   1                    {        
+ 193   2                     Send_192bits(shuzud[2],n);
+ 194   2                 delays(2);       
+ 195   2                 }
+ 196   1                 delays(10);  
+ 197   1                 
+ 198   1                  for (n=0;n<19;n++) 
+ 199   1                    {        
+ 200   2                     Send_192bits(shuzud[3],n);
+ 201   2                 delays(2);       
+ 202   2                 }
+ 203   1                 delays(10);  
+ 204   1                 
+ 205   1                  for (n=0;n<19;n++) 
+ 206   1                    {        
+ 207   2                     Send_192bits(shuzud[4],n);
+ 208   2                 delays(2);       
+ 209   2                 }
+ 210   1                 delays(10);  
+ 211   1                 
+ 212   1                  for (n=0;n<19;n++) 
+ 213   1                    {        
+ 214   2                     Send_192bits(shuzud[5],n);
+ 215   2                 delays(2);       
+ 216   2                 }
+ 217   1                 delays(10);  
+ 218   1               
+ 219   1                  for (n=0;n<19;n++) 
+ 220   1                    {        
+ 221   2                     Send_192bits(shuzud[7],n);
+ 222   2                 delays(2);       
+ 223   2                 }
+ 224   1                 delays(10);  
+ 225   1        
+ 226   1                 
+ 227   1          }
+*** WARNING C280 IN LINE 172 OF RGB.C: 'ta': unreferenced local variable
+ 228          
+ 229          /////////////////////////////////////////////////////////////////////////////////////2    
+ 230                void    RGBB( unsigned int tb    )   
+ 231              {       
+ 232   1                         unsigned int t;
+ 233   1                        unsigned int w=65000;
+ 234   1      
+ 235   1                            for (t=0;t< w;t++);   
+ 236   1                            Send_192bits(shuzud[2],9);
+ 237   1                            for (t=0;t< w;w++);                    
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 5   
+
+ 238   1                            Send_192bits(shuzud[1],8);
+ 239   1                            for (t=0;t< w;t++);
+ 240   1                            Send_192bits(shuzud[0],7);          
+ 241   1                            for (t=0;t< w;t++);
+ 242   1                            Send_192bits(shuzud[5],6);          
+ 243   1                            for (t=0;t< w;t++);
+ 244   1                            Send_192bits(shuzud[4],5);        
+ 245   1                            for (t=0;t< w;t++);   
+ 246   1                            Send_192bits(shuzud[3],4);          
+ 247   1                            for (t=0;t< w;t++);
+ 248   1                            Send_192bits(shuzud[2],3);          
+ 249   1                            for (t=0;t< w;t++);
+ 250   1                            Send_192bits(shuzud[1],2);          
+ 251   1                            for (t=0;t< w;t++);                      
+ 252   1                            Send_192bits(shuzud[0],1);          
+ 253   1                            for (t=0;t< w;t++);
+ 254   1                         
+ 255   1             }
+*** WARNING C280 IN LINE 230 OF RGB.C: 'tb': unreferenced local variable
+ 256              
+ 257          
+ 258          
+ 259          /////////////////////////////////////////////////////////////////////////////////////5
+ 260                  void RGBE(unsigned int te)
+ 261             {        
+ 262   1                unsigned int t;
+ 263   1                  unsigned int w =65000;                  
+ 264   1                             Delay500us();
+ 265   1                            Send_192bits(shuzud[5],18);                     
+ 266   1                             Delay500us();                      
+ 267   1                            Send_192bits(shuzud[4],17);                                
+ 268   1                            Delay500us();                       
+ 269   1                            Send_192bits(shuzud[3],16);                               
+ 270   1                             Delay500us();                       
+ 271   1                            Send_192bits(shuzud[2],15);                          
+ 272   1                             Delay500us();                         
+ 273   1                            Send_192bits(shuzud[1],14);                              
+ 274   1                             Delay500us();                                     
+ 275   1                            Send_192bits(shuzud[0],13);
+ 276   1                             Delay500us();
+ 277   1                            Send_192bits(shuzud[5],12);                     
+ 278   1                             Delay500us();                      
+ 279   1                            Send_192bits(shuzud[4],11);                                
+ 280   1                            Delay500us();                       
+ 281   1                            Send_192bits(shuzud[3],10);                               
+ 282   1                             Delay500us();                       
+ 283   1                            Send_192bits(shuzud[2],9);                           
+ 284   1                             Delay500us();                         
+ 285   1                            Send_192bits(shuzud[1],8);                               
+ 286   1                             Delay500us();                                     
+ 287   1                            Send_192bits(shuzud[0],7);
+ 288   1                             Delay500us();
+ 289   1                            Send_192bits(shuzud[5],6);                      
+ 290   1                             Delay500us();                      
+ 291   1                            Send_192bits(shuzud[4],5);                                 
+ 292   1                            Delay500us();                       
+ 293   1                            Send_192bits(shuzud[3],4);                                
+ 294   1                             Delay500us();                       
+ 295   1                            Send_192bits(shuzud[2],3);                           
+ 296   1                             Delay500us();                         
+ 297   1                            Send_192bits(shuzud[1],2);                               
+ 298   1                             Delay500us();                                     
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 6   
+
+ 299   1                            Send_192bits(shuzud[0],1);
+ 300   1               
+ 301   1           
+ 302   1                             delays(100);
+ 303   1      
+ 304   1          }
+*** WARNING C280 IN LINE 260 OF RGB.C: 'te': unreferenced local variable
+*** WARNING C280 IN LINE 262 OF RGB.C: 't': unreferenced local variable
+ 305          
+ 306          
+ 307          /////////////////////////////////////////////////////////////////////////////////////6
+ 308          
+ 309          
+ 310          
+ 311          /////////////////////////////////////////////////////////////////////////////////////7
+ 312                  void rgbg(unsigned int tg)
+ 313             {
+ 314   1                  unsigned int t;
+ 315   1                  unsigned int w =65000;                                    
+ 316   1                     Delay500us();          
+ 317   1                       Send_192bits(shuzud[0],18);
+ 318   1                           delays(tg);
+ 319   1           
+ 320   1                               Delay500us();                      
+ 321   1                         Send_192bits(shuzud[0],18);
+ 322   1                            Delay500us();                     
+ 323   1                         Send_192bits(shuzud[0],16);  
+ 324   1                             Delay500us();                              
+ 325   1                         Send_192bits(shuzud[0],14);                             
+ 326   1                            Delay500us(); 
+ 327   1                         Send_192bits(shuzud[0],12);                               
+ 328   1                            Delay500us();                       
+ 329   1                         Send_192bits(shuzud[1],10);                                
+ 330   1                             Delay500us();  
+ 331   1                            Send_192bits(shuzud[1],8);                             
+ 332   1                             Delay500us();                         
+ 333   1                            Send_192bits(shuzud[0],6);                               
+ 334   1                             Delay500us();                                       
+ 335   1                            Send_192bits(shuzud[0],4);          
+ 336   1                            Delay500us();                                         
+ 337   1                            Send_192bits(shuzud[0],2);                                                 
+ 338   1                             delays(tg);
+ 339   1                             
+ 340   1                             Delay500us();                      
+ 341   1                         Send_192bits(shuzud[0],318);
+ 342   1                            Delay500us();                     
+ 343   1                         Send_192bits(shuzud[0],16);  
+ 344   1                             Delay500us();                              
+ 345   1                         Send_192bits(shuzud[0],14);                                 
+ 346   1                            Delay500us(); 
+ 347   1                         Send_192bits(shuzud[1],12);                       
+ 348   1                            Delay500us();                       
+ 349   1                         Send_192bits(shuzud[1],10);                                
+ 350   1                             Delay500us();                       
+ 351   1                            Send_192bits(shuzud[1],8);                       
+ 352   1                             Delay500us();                         
+ 353   1                            Send_192bits(shuzud[1],6);                               
+ 354   1                             Delay500us();                                       
+ 355   1                            Send_192bits(shuzud[0],4);          
+ 356   1                            Delay500us();                                           
+ 357   1                            Send_192bits(shuzud[0],2);                                                   
+ 358   1                             delays(tg);
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 7   
+
+ 359   1                             
+ 360   1                         Delay500us();                      
+ 361   1                         Send_192bits(shuzud[0],18);
+ 362   1                            Delay500us();                   
+ 363   1                         Send_192bits(shuzud[0],16);  
+ 364   1                             Delay500us();                              
+ 365   1                         Send_192bits(shuzud[1],14);                                 
+ 366   1                            Delay500us(); 
+ 367   1                         Send_192bits(shuzud[1],12);                       
+ 368   1                            Delay500us();                       
+ 369   1                         Send_192bits(shuzud[1],10);                                
+ 370   1                             Delay500us();                       
+ 371   1                            Send_192bits(shuzud[1],8);                                 
+ 372   1                             Delay500us();                          
+ 373   1                             Send_192bits(shuzud[1],6);                            
+ 374   1                             Delay500us();                  
+ 375   1                            Send_192bits(shuzud[1],4);          
+ 376   1                            Delay500us();                       
+ 377   1                            Send_192bits(shuzud[0],2);                                                                                             
+ 378   1                             delays(tg);
+ 379   1                             
+ 380   1                            Delay500us();                     
+ 381   1                         Send_192bits(shuzud[0],18);
+ 382   1                            Delay500us();                     
+ 383   1                         Send_192bits(shuzud[1],16);  
+ 384   1                             Delay500us();                              
+ 385   1                         Send_192bits(shuzud[1],14);                       
+ 386   1                            Delay500us(); 
+ 387   1                         Send_192bits(shuzud[1],12);                                 
+ 388   1                            Delay500us();                       
+ 389   1                         Send_192bits(shuzud[1],10);                      
+ 390   1                             Delay500us();                       
+ 391   1                            Send_192bits(shuzud[1],8);                               
+ 392   1                             Delay500us();                         
+ 393   1                            Send_192bits(shuzud[1],6);                               
+ 394   1                             Delay500us();                  
+ 395   1                            Send_192bits(shuzud[1],4);          
+ 396   1                            Delay500us();                                         
+ 397   1                            Send_192bits(shuzud[1],2);                                              
+ 398   1                             delays(tg);
+ 399   1                             
+ 400   1                         Delay500us();                      
+ 401   1                         Send_192bits(shuzud[1],18);
+ 402   1                            Delay500us();                     
+ 403   1                         Send_192bits(shuzud[1],16);  
+ 404   1                             Delay500us();                              
+ 405   1                         Send_192bits(shuzud[1],14);                                 
+ 406   1                            Delay500us(); 
+ 407   1                         Send_192bits(shuzud[1],12);                                 
+ 408   1                         Delay500us();                        
+ 409   1                         Send_192bits(shuzud[1],10);                                
+ 410   1                             Delay500us();                       
+ 411   1                            Send_192bits(shuzud[1],8);                                 
+ 412   1                             Delay500us();                         
+ 413   1                            Send_192bits(shuzud[1],6);                               
+ 414   1                             Delay500us();                                     
+ 415   1                            Send_192bits(shuzud[1],4);          
+ 416   1                            Delay500us();
+ 417   1                            Send_192bits(shuzud[1],2);                                                                                 
+ 418   1                             delays(tg);  
+ 419   1                                                   delays(100);
+ 420   1                          
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 8   
+
+ 421   1                         Delay500us();                      
+ 422   1                         Send_192bits(shuzud[2],18);
+ 423   1                            Delay500us();                     
+ 424   1                         Send_192bits(shuzud[1],16);  
+ 425   1                             Delay500us();                            
+ 426   1                         Send_192bits(shuzud[1],14);                                 
+ 427   1                            Delay500us(); 
+ 428   1                         Send_192bits(shuzud[1],12);                       
+ 429   1                            Delay500us();                       
+ 430   1                         Send_192bits(shuzud[1],10);                                
+ 431   1                             Delay500us();                       
+ 432   1                            Send_192bits(shuzud[1],8);                                 
+ 433   1                             Delay500us();                         
+ 434   1                            Send_192bits(shuzud[1],6);                               
+ 435   1                             Delay500us();                   
+ 436   1                            Send_192bits(shuzud[1],4);          
+ 437   1                            Delay500us();                       
+ 438   1                            Send_192bits(shuzud[1],2);                                                           
+ 439   1                             delays(tg);
+ 440   1      
+ 441   1                         Delay500us();                    
+ 442   1                         Send_192bits(shuzud[2],18);
+ 443   1                            Delay500us();                   
+ 444   1                         Send_192bits(shuzud[2],16);  
+ 445   1                             Delay500us();                          
+ 446   1                         Send_192bits(shuzud[1],14);                               
+ 447   1                            Delay500us(); 
+ 448   1                         Send_192bits(shuzud[1],12);                                 
+ 449   1                            Delay500us();                       
+ 450   1                         Send_192bits(shuzud[1],10);                                
+ 451   1                             Delay500us();                       
+ 452   1                            Send_192bits(shuzud[1],8);                             
+ 453   1                             Delay500us();                         
+ 454   1                            Send_192bits(shuzud[1],6);                               
+ 455   1                             Delay500us();                                                                                 
+ 456   1                            Send_192bits(shuzud[1],4);          
+ 457   1                            Delay500us();
+ 458   1                            Send_192bits(shuzud[2],2);                                                
+ 459   1                             delays(tg);
+ 460   1                             
+ 461   1                             Delay500us();                    
+ 462   1                         Send_192bits(shuzud[2],18);
+ 463   1                            Delay500us();                     
+ 464   1                         Send_192bits(shuzud[2],16);  
+ 465   1                             Delay500us();                              
+ 466   1                         Send_192bits(shuzud[2],14);                                 
+ 467   1                            Delay500us(); 
+ 468   1                         Send_192bits(shuzud[1],12);                                 
+ 469   1                            Delay500us();                     
+ 470   1                         Send_192bits(shuzud[1],10);                                
+ 471   1                             Delay500us();                       
+ 472   1                            Send_192bits(shuzud[1],8);                                 
+ 473   1                             Delay500us();                         
+ 474   1                            Send_192bits(shuzud[1],6);                               
+ 475   1                             Delay500us();                                                         
+ 476   1                            Send_192bits(shuzud[2],4);          
+ 477   1                            Delay500us();                       
+ 478   1                            Send_192bits(shuzud[2],2);                                                                                         
+ 479   1                             delays(tg);
+ 480   1                             
+ 481   1                             Delay500us();  
+ 482   1                             Send_192bits(shuzud[2],18);
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 9   
+
+ 483   1                            Delay500us();                     
+ 484   1                         Send_192bits(shuzud[2],16);  
+ 485   1                             Delay500us();                              
+ 486   1                         Send_192bits(shuzud[2],24);                       
+ 487   1                            Delay500us(); 
+ 488   1                         Send_192bits(shuzud[2],12);                                 
+ 489   1                            Delay500us();                       
+ 490   1                         Send_192bits(shuzud[1],10);                                
+ 491   1                             Delay500us();                     
+ 492   1                            Send_192bits(shuzud[1],8);                             
+ 493   1                             Delay500us();                         
+ 494   1                            Send_192bits(shuzud[2],6);                               
+ 495   1                             Delay500us();                                                                           
+ 496   1                            Send_192bits(shuzud[2],4);          
+ 497   1                            Delay500us();                       
+ 498   1                            Send_192bits(shuzud[2],2);                                                   
+ 499   1                             delays(tg);
+ 500   1                             
+ 501   1                             Delay500us();                      
+ 502   1                         Send_192bits(shuzud[2],18);
+ 503   1                            Delay500us();                     
+ 504   1                         Send_192bits(shuzud[2],16);  
+ 505   1                             Delay500us();                              
+ 506   1                         Send_192bits(shuzud[2],14);                       
+ 507   1                            Delay500us(); 
+ 508   1                         Send_192bits(shuzud[2],12);                               
+ 509   1                            Delay500us();                     
+ 510   1                         Send_192bits(shuzud[2],10);                                
+ 511   1                             Delay500us();                       
+ 512   1                            Send_192bits(shuzud[2],8);                                 
+ 513   1                             Delay500us();                         
+ 514   1                            Send_192bits(shuzud[2],6);                               
+ 515   1                             Delay500us();                                                                                 
+ 516   1                            Send_192bits(shuzud[2],4);          
+ 517   1                            Delay500us();                       
+ 518   1                            Send_192bits(shuzud[2],2);                                                                                           
+ 519   1                             delays(tg);
+ 520   1      
+ 521   1        }
+*** WARNING C280 IN LINE 314 OF RGB.C: 't': unreferenced local variable
+ 522          
+ 523          
+ 524          /////////////////////////////////////////////////////////////////////////////////////8
+ 525                  void rgbh(unsigned int th)
+ 526             {        
+ 527   1                unsigned int t;
+ 528   1                  unsigned int w =65000;                
+ 529   1                             Delay500us();                               
+ 530   1                       Send_192bits(shuzud[0],18);                      
+ 531   1                             Delay500us();                      
+ 532   1                         Send_192bits(shuzud[1],15);                                 
+ 533   1                            Delay500us();                       
+ 534   1                         Send_192bits(shuzud[2],12);                                
+ 535   1                             Delay500us();                       
+ 536   1                            Send_192bits(shuzud[3],9);                                 
+ 537   1                             Delay500us();                         
+ 538   1                            Send_192bits(shuzud[4],6);                               
+ 539   1                             Delay500us();                                     
+ 540   1                            Send_192bits(shuzud[5],3);                         
+ 541   1                             delays(th);
+ 542   1                             Delay500us();    
+ 543   1                       Send_192bits(shuzud[1],18);                      
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 10  
+
+ 544   1                             Delay500us();                      
+ 545   1                         Send_192bits(shuzud[2],15);                               
+ 546   1                            Delay500us();                     
+ 547   1                         Send_192bits(shuzud[3],12);                          
+ 548   1                             Delay500us();                     
+ 549   1                            Send_192bits(shuzud[4],9);                                 
+ 550   1                             Delay500us();                         
+ 551   1                            Send_192bits(shuzud[5],6);                               
+ 552   1                             Delay500us();                                                                                 
+ 553   1                            Send_192bits(shuzud[0],3);                               
+ 554   1                             delays(th);              
+ 555   1                             Delay500us();  
+ 556   1                       Send_192bits(shuzud[2],18);                      
+ 557   1                             Delay500us();                    
+ 558   1                         Send_192bits(shuzud[3],15);                               
+ 559   1                            Delay500us();                       
+ 560   1                         Send_192bits(shuzud[4],12);                                
+ 561   1                             Delay500us();                       
+ 562   1                            Send_192bits(shuzud[5],9);                                 
+ 563   1                             Delay500us();                         
+ 564   1                            Send_192bits(shuzud[0],6);                               
+ 565   1                             Delay500us();                                     
+ 566   1                            Send_192bits(shuzud[1],3);                     
+ 567   1                             delays(th);
+ 568   1                             Delay500us();
+ 569   1                       Send_192bits(shuzud[3],18);                      
+ 570   1                             Delay500us();                      
+ 571   1                         Send_192bits(shuzud[4],15);                                 
+ 572   1                            Delay500us();                       
+ 573   1                         Send_192bits(shuzud[5],12);                      
+ 574   1                             Delay500us();                       
+ 575   1                            Send_192bits(shuzud[0],9);                       
+ 576   1                             Delay500us();                         
+ 577   1                            Send_192bits(shuzud[1],6);                     
+ 578   1                             Delay500us();                   
+ 579   1                            Send_192bits(shuzud[2],3);                               
+ 580   1                             delays(th);
+ 581   1                           Delay500us();                                   
+ 582   1                       Send_192bits(shuzud[4],18);                      
+ 583   1                             Delay500us();                      
+ 584   1                         Send_192bits(shuzud[5],15);                     
+ 585   1                            Delay500us();                       
+ 586   1                         Send_192bits(shuzud[0],12);                                
+ 587   1                             Delay500us();                       
+ 588   1                            Send_192bits(shuzud[1],9);                           
+ 589   1                             Delay500us();                         
+ 590   1                            Send_192bits(shuzud[2],6);                               
+ 591   1                             Delay500us();                                     
+ 592   1                            Send_192bits(shuzud[3],3);                               
+ 593   1                             delays(th);
+ 594   1                           Delay500us();                                 
+ 595   1                       Send_192bits(shuzud[5],18);                    
+ 596   1                             Delay500us();                      
+ 597   1                         Send_192bits(shuzud[0],15);                                 
+ 598   1                            Delay500us();                     
+ 599   1                         Send_192bits(shuzud[1],12);                                
+ 600   1                             Delay500us();                     
+ 601   1                            Send_192bits(shuzud[2],9);                     
+ 602   1                             Delay500us();                       
+ 603   1                            Send_192bits(shuzud[3],6);                           
+ 604   1                             Delay500us();                                       
+ 605   1                            Send_192bits(shuzud[4],3);                           
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 11  
+
+ 606   1                             //delays(th);
+ 607   1      
+ 608   1         }
+*** WARNING C280 IN LINE 527 OF RGB.C: 't': unreferenced local variable
+ 609          /////////////////////////////////////////////////////////////////////////////////////8
+ 610                  void rgbl(unsigned int tl)
+ 611             {        
+ 612   1                unsigned int t;
+ 613   1                  unsigned int w =65000;                
+ 614   1                             Delay500us();                               
+ 615   1                       Send_192bits(shuzud[7],18);                      
+ 616   1                             Delay500us();                      
+ 617   1                         Send_192bits(shuzud[7],15);                                 
+ 618   1                            Delay500us();                       
+ 619   1                         Send_192bits(shuzud[7],12);                                
+ 620   1                             Delay500us();                       
+ 621   1                            Send_192bits(shuzud[7],9);                                 
+ 622   1                             Delay500us();                         
+ 623   1                            Send_192bits(shuzud[7],6);                               
+ 624   1                             Delay500us();                                     
+ 625   1                            Send_192bits(shuzud[0],3);                         
+ 626   1                             delays(tl);
+ 627   1                             Delay500us();    
+ 628   1                       Send_192bits(shuzud[7],18);                      
+ 629   1                             Delay500us();                      
+ 630   1                         Send_192bits(shuzud[7],15);                               
+ 631   1                            Delay500us();                     
+ 632   1                         Send_192bits(shuzud[7],12);                          
+ 633   1                             Delay500us();                     
+ 634   1                            Send_192bits(shuzud[7],9);                                 
+ 635   1                             Delay500us();                         
+ 636   1                            Send_192bits(shuzud[0],6);                               
+ 637   1                             Delay500us();                                                                                 
+ 638   1                            Send_192bits(shuzud[1],3);                               
+ 639   1                             delays(tl);              
+ 640   1                             Delay500us();  
+ 641   1                       Send_192bits(shuzud[7],18);                      
+ 642   1                             Delay500us();                    
+ 643   1                         Send_192bits(shuzud[7],15);                               
+ 644   1                            Delay500us();                       
+ 645   1                         Send_192bits(shuzud[7],12);                                
+ 646   1                             Delay500us();                       
+ 647   1                            Send_192bits(shuzud[0],9);                                 
+ 648   1                             Delay500us();                         
+ 649   1                            Send_192bits(shuzud[1],6);                               
+ 650   1                             Delay500us();                                     
+ 651   1                            Send_192bits(shuzud[2],3);                     
+ 652   1                             delays(tl);
+ 653   1                             Delay500us();
+ 654   1                       Send_192bits(shuzud[7],18);                      
+ 655   1                             Delay500us();                      
+ 656   1                         Send_192bits(shuzud[7],15);                                 
+ 657   1                            Delay500us();                       
+ 658   1                         Send_192bits(shuzud[0],12);                      
+ 659   1                             Delay500us();                       
+ 660   1                            Send_192bits(shuzud[1],9);                       
+ 661   1                             Delay500us();                         
+ 662   1                            Send_192bits(shuzud[2],6);                     
+ 663   1                             Delay500us();                   
+ 664   1                            Send_192bits(shuzud[3],3);                               
+ 665   1                             delays(tl);
+ 666   1                           Delay500us();                                   
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 12  
+
+ 667   1                       Send_192bits(shuzud[7],18);                      
+ 668   1                             Delay500us();                      
+ 669   1                         Send_192bits(shuzud[0],15);                     
+ 670   1                            Delay500us();                       
+ 671   1                         Send_192bits(shuzud[1],12);                                
+ 672   1                             Delay500us();                       
+ 673   1                            Send_192bits(shuzud[2],9);                           
+ 674   1                             Delay500us();                         
+ 675   1                            Send_192bits(shuzud[3],6);                               
+ 676   1                             Delay500us();                                     
+ 677   1                            Send_192bits(shuzud[4],3);                               
+ 678   1                             delays(tl);
+ 679   1                           Delay500us();                                 
+ 680   1                       Send_192bits(shuzud[0],18);                    
+ 681   1                             Delay500us();                      
+ 682   1                         Send_192bits(shuzud[1],15);                                 
+ 683   1                            Delay500us();                     
+ 684   1                         Send_192bits(shuzud[2],12);                                
+ 685   1                             Delay500us();                     
+ 686   1                            Send_192bits(shuzud[3],9);                     
+ 687   1                             Delay500us();                       
+ 688   1                            Send_192bits(shuzud[4],6);                           
+ 689   1                             Delay500us();                                       
+ 690   1                            Send_192bits(shuzud[5],3);
+ 691   1      
+ 692   1                             //delays(tl);
+ 693   1      
+ 694   1         }
+*** WARNING C280 IN LINE 612 OF RGB.C: 't': unreferenced local variable
+ 695          
+ 696          
+ 697          
+ 698          
+ 699          
+ 700          
+ 701          
+ 702          
+ 703          
+ 704          
+ 705          
+ 706          
+ 707              
+ 708            void delay()
+ 709          {
+ 710   1      unsigned int i,j;
+ 711   1             for (i=0;i<250;i++)
+ 712   1             {
+ 713   2                    for (j=0;j<200;j++);
+ 714   2             }
+ 715   1      }
+ 716          
+ 717          
+ 718          //大延时函数十几秒
+ 719          void delays(uchar t)
+ 720          {
+ 721   1             uchar p;
+ 722   1      
+ 723   1      
+ 724   1         for (p=0; p<t;p++)
+ 725   1           {
+ 726   2             delay();
+ 727   2              
+C51 COMPILER V9.54   RGB                                                                   05/04/2023 11:21:40 PAGE 13  
+
+ 728   2                      }
+ 729   1             
+ 730   1      }
+ 731          
+ 732          
+ 733          
+ 734               void Delay1us()    //@27.000MHz
+ 735          {
+ 736   1        unsigned char i;
+ 737   1      
+ 738   1        _nop_();
+ 739   1        i = 4;
+ 740   1        while (--i);
+ 741   1      }
+ 742          
+ 743          
+ 744             void Delay500us()    //@27.000MHz
+ 745          { 
+ 746   1      unsigned char i, j;
+ 747   1      
+ 748   1        i = 14;
+ 749   1        j = 30;
+ 750   1        do
+ 751   1        {
+ 752   2          while (--j);
+ 753   2        } while (--i);
+ 754   1      }
+ 755          
+ 756          
+ 757          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3746    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     77      36
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  10 WARNING(S),  0 ERROR(S)

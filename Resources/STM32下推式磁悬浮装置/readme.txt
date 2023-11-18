@@ -1,0 +1,55 @@
+实验设备：STM32F103C8T6
+工程简介：下推式磁悬浮工程
+作者：Fengweiguo
+
+CORE：放置M3相关的源文件和启动文件
+HARDWARE：放置外设相关源文件
+OBJ：放置MDK输出文件
+PROJECT：放置MDK工程文件
+STM32F10x_FWLib：放置STM32官方3.5版本固件库
+SYSTEM：放置延时函数、位带操作、串口相关的源文件
+USER：放置主函数、STM32中断函数
+
+其中HARDWARE、USER为可更新文件夹，其余均为固定文件夹
+
+
+引脚分配如下：
+SWD 
+PA13 PA14 禁用
+
+串口1
+PA9单片机USART1_TX  PA10单片机USART1_RX
+
+OLED_IIC
+PA12->CLK   PA15->DIN
+下面两引脚禁用，用于拓展OLED_SPI
+PA6->OLED_DC
+PA7->OLED_CS
+
+Bluetooth
+PA2单片机USART2_TX  PA3单片机USART2_RX 
+
+PWMA
+PA8->TIM1 CH1
+
+PWMB
+PA11->TIM1 CH4
+
+板载LED
+PC13
+
+X轴ADC
+PA1->ADC1 IN1
+
+Y轴ADC
+PA4->ADC1 IN4
+
+Z轴ADC
+PA5->ADC1 IN5
+
+X轴线圈 A1 A2
+A1->PB12  A2->PB13
+
+Y轴线圈 B1 B2
+B1->PB14  B2->PB15
+

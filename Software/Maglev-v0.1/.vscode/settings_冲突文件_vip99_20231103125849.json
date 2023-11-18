@@ -1,0 +1,22 @@
+{
+    "cortex-debug.armToolchainPath": "C:\\ARM-GNU-TOOLCHAIN-12.3.REL1-MINGW-W64-I686-ARM-NONE-EABI\\BIN",
+    "cortex-debug.openocdPath": "C:\\OPENOCD-20230712-0.12.0\\BIN\\OPENOCD.EXE",
+    "files.associations": {
+        "uart_handler.h": "c",
+        "usart.h": "c",
+        "main.h": "c",
+        "dma.h": "c",
+        "i2c_handler.h": "c",
+        "i2c.h": "c",
+        "oled.h": "c",
+        "AT8236.C": "cpp",
+        "vofa.h": "c",
+        "coil.h": "c",
+        "delay.h": "c",
+        "pid.h": "c",
+        "adc_handler.h": "c",
+        "adc.h": "c",
+        "lowpass_filter.h": "c"
+    },
+    "C_Cpp.default.compilerPath": "C:\\ARM-GNU-TOOLCHAIN-12.3.REL1-MINGW-W64-I686-ARM-NONE-EABI\\BIN\\ARM-NONE-EABI-GCC.EXE"
+}
